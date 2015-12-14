@@ -53,6 +53,7 @@ function parseFile(filedata) {
 function ArduinoOutput() {}
 ArduinoOutput.prototype = {
   switches: [],
+  flash_delay: 200,
   init: function() {
     for (var k in this.emit) {
       this.emit[k] = this.emit[k].bind(this);
@@ -148,20 +149,21 @@ ArduinoOutput.prototype = {
     },
     repeating: function(repeating, dur) {
       var self = this;
-      var count = parseInt(dur.dur / 200);
+      var flash_iter_time = (self.flash_delay * 2);
+      var count = parseInt(dur.dur / flash_iter_time)
       //STATE change
-      dur.dur = dur.dur - (count * 200);
+      dur.dur = dur.dur - (count * flash_iter_time);
       return (
         "\n//blink tracks: " + Object.keys(repeating).join(',') + "\n"
         + "for (float f = 0; f < " + count + "; f++) {\n"
         + Object.keys(repeating).map(function(r) {
           return self.emit.on(r);
         }).join('')
-        + self.emit.delay(100)
+        + self.emit.delay(self.flash_delay)
         + Object.keys(repeating).map(function(r) {
           return self.emit.off(r);
         }).join('')
-        + self.emit.delay(100)
+        + self.emit.delay(self.flash_delay)
         + "}\n"
       );
     },
@@ -184,11 +186,11 @@ ArduinoOutput.prototype = {
               + "\nconst int switchPin3 = 37;"
               + "\n"
               + "\n// numbers of the LEDs"
-              + "\nint led10 = 7;"
-              + "\nint led9 = 6;"
-              + "\nint led8 = 5;"
-              + "\nint led7 = 4;"
-              + "\nint led6 = 3;"
+              + "\nint led10 = 9;"
+              + "\nint led9 = 10;"
+              + "\nint led8 = 11;"
+              + "\nint led7 = 12;"
+              + "\nint led6 = 13;"
               + "\n"
               + "\n"
               + "\n"
