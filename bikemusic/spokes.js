@@ -142,7 +142,9 @@ ArduinoOutput.prototype = {
       }).join('');
     },
     delay: function(delay) {
-      return "delay(" + delay + ");\n";
+      //arduino delay only takes integers.
+      //We could accumulate the decimal or just round
+      return "delay(" + Math.round(delay) + ");\n";
     },
     repeating: function(repeating, dur) {
       var self = this;
