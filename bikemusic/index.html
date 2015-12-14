@@ -3,8 +3,54 @@
   <head>
   </head>
   <body>
+    <div style="float:right; max-width:40%">
+      <h4>Instructions</h4>
+      <p>Your Reaper files must have the following structure:</p>
+      <ul>
+        <li>Tracks 0,1 = one color, Tracks 2,3 = second color, ...
+        <li>Odd tracks are the tremolo version of their lower even number, so 1 is tremolo of track 0.
+        <li>Track 10 is tremolo for everyone
+      </ul>
+      <p>Follow these steps.</p>
+      <ol>
+        <li>Before choosing each file, enter a title, and the switch pin.  1 is for pin 31.  2 is pin 33, 3 is pin 35, 4 is pin 37;
+      </ol>
+    </div>
     <form>
-      Your Reaper File: <input id="reaperfile" type="file" name="reaperfile" />
+      <ul>
+        <li>
+          4 switches
+          <!--
+          <label for"switchnum"># of switches</label>
+          <select name="switchnum" >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+          </select>
+          -->
+        </li>
+        <li>
+          <label for="filetitle">Title of file</label>
+          <input type="text" name="filetitle" />
+          <label for="fileswitch">Switch of file:</label>
+          <select name="fileswitch" >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+        <li>
+          Your Reaper File: <input id="reaperfile" type="file" name="reaperfile" />
+        </li>
+      </ul>
+      <h4>switches</h4>
+      <ul id="switchlist">
+      </ul>
 
       <h3>arduino output</h3>
       <textarea id="arduinooutput" rows="20" cols="70"></textarea>

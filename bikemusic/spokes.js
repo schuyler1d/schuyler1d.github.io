@@ -1,3 +1,7 @@
+$(function() {
+  window.ao = (new ArduinoOutput).init();
+});
+
 $('#reaperfile').change(function() {
   console.log(this.files);
   console.log(this.files[0].name);
@@ -6,9 +10,13 @@ $('#reaperfile').change(function() {
   f.onload = function(e) {
     var contents = e.target.result;
     var events = parseFile(contents);
-    var ao = (new ArduinoOutput).init();
-    $('#arduinooutput').val(ao.render(events));
-    
+    var scase = Number($('select[name=fileswitch] option:selected').val());
+    var stitle = $('input[name=filetitle]').val();
+    ao.load(events, scase, stitle);
+    $('#arduinooutput').val(ao.render());
+    var newcase = $('<li id="case' + scase + '">Case ' +scase + ': '+stitle+'</li>');
+    $('#case'+scase).remove();
+    $('#switchlist').append(newcase);
     //console.log(contents);
   };
   f.readAsText(this.files[0]);
@@ -29,7 +37,7 @@ function parseFile(filedata) {
       start: Number(fields[2]),
       duration: Number(fields[3]),
       file: fields[11],
-      repeating: (fields[11].match(/repeated/i) == null)
+      repeating: ((Number(fields[1]) % 2) == 1)
     };
     events.push([v.start, 'start', v]);
     events.push([v.start + v.duration, 'end', v]);
@@ -44,6 +52,7 @@ function parseFile(filedata) {
 
 function ArduinoOutput() {}
 ArduinoOutput.prototype = {
+  switches: [],
   init: function() {
     for (var k in this.emit) {
       this.emit[k] = this.emit[k].bind(this);
@@ -52,8 +61,19 @@ ArduinoOutput.prototype = {
   },
   render: function(events) {
     var result = [];
-    var repeating = {};
     result.push(this.emit.beginning());
+    for (var i=0, l=this.switches.length; i<l; i++) {
+      var s = this.switches[i];
+      if (s) {
+        result.push(this.emit.switchcase(i, s));
+      }
+    }
+    result.push(this.emit.ending());
+    return result.join('');
+  },
+  load: function(events, casenum, title) {
+    var result = ["\n// title:" + String(title) + "\n"];
+    var repeating = {};
     //last event is guaranteed to be an end, so easier to assume a next
     for (var i=0,l=events.length; i<l-1; i++) {
       var e = events[i];
@@ -80,8 +100,11 @@ ArduinoOutput.prototype = {
         result.push(this.emit.delay(dur.dur));
       }
     }
-    result.push(this.emit.ending());
-    return result.join('');
+    var rv = result.join('');
+    if (casenum) {
+      this.switches[casenum] = rv;
+    }
+    return rv;
   },
   led: [
     ["led10"],
@@ -123,25 +146,31 @@ ArduinoOutput.prototype = {
     },
     repeating: function(repeating, dur) {
       var self = this;
-      var count = parseInt(dur.dur / 400);
+      var count = parseInt(dur.dur / 200);
       //STATE change
-      dur.dur = dur.dur - (count * 400);
+      dur.dur = dur.dur - (count * 200);
       return (
         "\n//blink tracks: " + Object.keys(repeating).join(',') + "\n"
         + "for (float f = 0; f < " + count + "; f++) {\n"
         + Object.keys(repeating).map(function(r) {
           return self.emit.on(r);
         }).join('')
-        + self.emit.delay(200)
+        + self.emit.delay(100)
         + Object.keys(repeating).map(function(r) {
           return self.emit.off(r);
         }).join('')
-        + self.emit.delay(200)
+        + self.emit.delay(100)
         + "}\n"
       );
     },
+    switchcase: function(num, inside) {
+      return (""
+              + "\ncase " + num + ":\n"
+              + inside
+              + "\nbreak;");
+    },
     ending: function() {
-      return "\nbreak;\n}}";
+      return "\n\n}}";
     },
     beginning: function() {
       return (""
@@ -165,11 +194,11 @@ ArduinoOutput.prototype = {
 
               + "\n  // put your setup code here, to run once:"
               + "\n  // initialize the LED pins as output:"
-              + "\n  pinMode(7, OUTPUT);"
-              + "\n  pinMode(6, OUTPUT);"
-              + "\n  pinMode(5, OUTPUT);"
-              + "\n  pinMode(4, OUTPUT);"
-              + "\n  pinMode(3, OUTPUT);"
+              + "\n  pinMode(led10, OUTPUT);"
+              + "\n  pinMode(led9, OUTPUT);"
+              + "\n  pinMode(led8, OUTPUT);"
+              + "\n  pinMode(led7, OUTPUT);"
+              + "\n  pinMode(led6, OUTPUT);"
               + "\n"
               + "\n  // initialize the switch pins as input:"
               + "\n  pinMode(switchPin0, INPUT);"
@@ -203,17 +232,6 @@ ArduinoOutput.prototype = {
               + "\ndigitalWrite(led6, LOW);"
               + "\nbreak;"
               + "\n"
-              + "\ncase 1:"
-              + "\n//null"
-              + "\ndigitalWrite(led10, HIGH);"
-              + "\ndigitalWrite(led9, HIGH);"
-              + "\ndigitalWrite(led8, HIGH);"
-              + "\ndigitalWrite(led7, HIGH);"
-              + "\ndigitalWrite(led6, HIGH);"
-              + "\nbreak;"
-              + "\n"
-              + "\n"
-              + "\ncase 2:"
               );
       }/*beginning*/
   }/*emit*/
