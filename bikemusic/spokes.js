@@ -170,7 +170,7 @@ ArduinoOutput.prototype = {
               + "\nbreak;");
     },
     ending: function() {
-      return "\n\n}}";
+      return "\ndefault:\nbreak;\n\n}}";
     },
     beginning: function() {
       return (""
