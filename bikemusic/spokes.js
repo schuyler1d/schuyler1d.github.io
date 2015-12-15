@@ -37,7 +37,7 @@ function parseFile(filedata) {
       start: Number(fields[2]),
       duration: Number(fields[3]),
       file: fields[11],
-      repeating: ((Number(fields[1]) % 2) == 1)
+      repeating: ((Number(fields[1]) % 2) == 1 || fields[1] == 10)
     };
     events.push([v.start, 'start', v]);
     events.push([v.start + v.duration, 'end', v]);
@@ -53,7 +53,7 @@ function parseFile(filedata) {
 function ArduinoOutput() {}
 ArduinoOutput.prototype = {
   switches: [],
-  flash_delay: 200,
+  flash_delay: 100,
   init: function() {
     for (var k in this.emit) {
       this.emit[k] = this.emit[k].bind(this);
