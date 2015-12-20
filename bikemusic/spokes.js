@@ -108,16 +108,16 @@ ArduinoOutput.prototype = {
     return rv;
   },
   led: [
-    ["led10"],
-    ["led10"],
-    ["led9"],
-    ["led9"],
-    ["led8"],
-    ["led8"],
-    ["led7"],
-    ["led7"],
     ["led6"],
     ["led6"],
+    ["led7"],
+    ["led7"],
+    ["led8"],
+    ["led8"],
+    ["led9"],
+    ["led9"],
+    ["led10"],
+    ["led10"],
     ["led10","led9","led8","led7","led6",]
   ],
   emit: {
