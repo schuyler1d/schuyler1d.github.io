@@ -145,7 +145,11 @@ ArduinoOutput.prototype = {
     delay: function(delay) {
       //arduino delay only takes integers.
       //We could accumulate the decimal or just round
-      return "delay(" + Math.round(delay) + ");\n";
+      return (""
+              + "\n"
+              + "if (switchPosition != switchPositionNow()) return;"
+              + "\ndelay(" + Math.round(delay) + ");\n"
+             );
     },
     repeating: function(repeating, dur) {
       var self = this;
@@ -211,17 +215,30 @@ ArduinoOutput.prototype = {
               + "\n  pinMode(switchPin3, INPUT);"
               + "\n}"
               + "\n"
-              + "\nvoid loop() {"
-              + "\n  // put your main code here, to run repeatedly:"
+              + "\nint switchPositionNow () {"
+              + "\n   int pos = 0;"
+              + "\n   if (digitalRead(switchPin0) == HIGH) pos = 1;"
+              + "\n   if (digitalRead(switchPin1) == HIGH) pos = 2;"
+              + "\n   if (digitalRead(switchPin2) == HIGH) pos = 3;"
+              + "\n   if (digitalRead(switchPin3) == HIGH) pos = 4;"
+              + "\n   return pos;"
+              + "\n}"
               + "\n"
+              + "\nvoid loop() {"
+              + "\n"
+              + "\n  // put your main code here, to run repeatedly:"
+              + "\n  runSong();"
+              + "\n}"
               + "\n// compute a number for the switch"
               + "\n"
-              + "\nint switchPosition = 0;"
+              + "\nvoid runSong() {"
               + "\n"
-              + "\nif (digitalRead(switchPin0) == HIGH) switchPosition = 1;"
-              + "\nif (digitalRead(switchPin1) == HIGH) switchPosition = 2;"
-              + "\nif (digitalRead(switchPin2) == HIGH) switchPosition = 3;"
-              + "\nif (digitalRead(switchPin3) == HIGH) switchPosition = 4;"
+              + "\ndigitalWrite(led10, LOW);"
+              + "\ndigitalWrite(led9, LOW);"
+              + "\ndigitalWrite(led8, LOW);"
+              + "\ndigitalWrite(led7, LOW);"
+              + "\ndigitalWrite(led6, LOW);"
+              + "\nint switchPosition = switchPositionNow();"
               + "\n"
               + "\nswitch (switchPosition)"
               + "\n"
