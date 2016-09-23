@@ -1,5 +1,8 @@
 function getUser (username) {
-  console.log(username);
+  if (typeof username === 'number') {
+    username = this;
+  }
+  console.log('username', username);
   return $.ajax({
     url: 'https://api.github.com/users/' + username + '/events',
     dataType: 'json',
