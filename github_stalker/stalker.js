@@ -1,4 +1,5 @@
 function getUser (username) {
+  console.log(username);
   return $.ajax({
     url: 'https://api.github.com/users/' + username + '/events',
     dataType: 'json',
@@ -14,8 +15,8 @@ function getUser (username) {
 function getUsersByQuery(users) {
   var userList = users.split(',');
   $.when.apply(null, $(userList).map(getUser)).done(function() {
-    $(arguments).each(function() {
-      console.log('datadata', this);
+    $(arguments).each(function(i) {
+      console.log('datadata', i, userList[i], this);
     });
   });
 }
