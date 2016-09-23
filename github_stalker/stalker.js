@@ -13,7 +13,7 @@ function getUser (username) {
 
 function getUsersByQuery(users) {
   var userList = users.split(',');
-  $.when($(userList).map(getUser), function() {
+  $.when.apply(null, $(userList).map(getUser)).done(function() {
     $(arguments).each(function() {
       console.log('datadata', this);
     });
