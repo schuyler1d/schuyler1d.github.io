@@ -1,6 +1,6 @@
 function getUser (username) {
   $.ajax({
-    url: 'https://api.github.com/user/' + username '/events/',
+    url: 'https://api.github.com/user/' + username + '/events/',
     dataType: 'json'
     success: function(data) {
       console.log('success', username, data);
