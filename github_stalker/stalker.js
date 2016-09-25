@@ -2,7 +2,6 @@ function getUser (username) {
   if (typeof username === 'number') {
     username = this;
   }
-  console.log('username', String(username));
   return $.ajax({
     url: 'https://api.github.com/' + username + '/events',
     dataType: 'json',
@@ -17,8 +16,11 @@ function getUser (username) {
 
 function getUsersByQuery(users) {
   var userList = users.split(',');
+  console.log(userList);
   $.when.apply(null, $(userList).map(getUser)).done(function() {
-    $(arguments).each(function(i) {
+    //workaround: when() is annoying -- if you send an array with one item, it collapses the result
+    var resList = ((userList.length == 1) ? [$.makeArray(arguments)] : $.makeArray(arguments) );
+    $(resList).each(function(i) {
       console.log('datadata', i, userList[i], this);
       _.templateSettings.evaluate = /{%([\s\S]+?)%}/g;
       var tmpl = _.template($('#template div').get(0).innerHTML);
