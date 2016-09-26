@@ -2,16 +2,33 @@
   <head>
     <link rel="stylesheet" href="https://cdn.concisecss.com/v3.4.0/concise.min.css">
     <link type="stylesheet" mimetype="text/css" href="style.css" />
+    <style>
+      .oneline {
+        height: 16px;
+        line-height: 16px;
+        overflow-y: hidden;
+        text-overflow: "...";
+      }
+      .oneline:active, .oneline:hover {
+        height: auto;
+        overflow-y: visible;
+      }
+      .card-content {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    </style>
   </head>
   <body>
     <ul>
       <li><a href="?orgs/MoveOnOrg,users/schuyler1d">moveon</a></li>
       <li><a href="?users/nikomatsakis,users/aturon">rust</a></li>
     </ul>
+
     <div id="events"></div>
     <div id="template" style="display:none"><div class="card">
       <div class="card-content">
-        <span class="card-title">${created_at}</span>
+        <div class="datetime">${created_at}</div>
         <img src="${actor.avatar_url}" style="max-width: 30px" />
         <a href="${actor.url}">${actor.display_login}</a>
         <b><a href="${repo.url}">${repo.name}</a></b>
@@ -19,31 +36,32 @@
         ${payload.ref}
         {% } %}        
         <b>${type}</b>
-        <p>
         {% if (payload.issue) {  %}
-        <a title="${payload.issue.title}" href="${payload.issue.html_url}">issue</a><br />
+          <div class="oneline">
+            <a title="" href="${payload.issue.html_url}">issue</a>:
+            ${payload.issue.title}
+          </div>
         {% } %}
-        </p>
+
         {% if (payload.comment) {  %}
-        <p><a href="${payload.comment.html_url}">comment</a> ${payload.comment.body}</p>
+          <div class="oneline">
+            <a href="${payload.comment.html_url}">comment</a>
+            ${payload.comment.body}
+          </div>
         {% } %}
+          
         {% if (payload.commits) {  %}
            <ul>
            {% _.forEach(payload.commits, function(commit) { %}
-             <li><a href="${commit.url}">#</a> ${commit.message}</li>
+             <li class="oneline"><a href="${commit.url}">#</a> ${commit.message}</li>
            {% }) %}
            </ul>
         {% } %}
-        </p>
       </div>
       <!--div class="card-footer">
         <a href="">Leave a comment?</a>
       </div-->
       </div>
-        {% if ("foo") { %}
-        <p>XXXXxxx</p>
-        {% } %}
-        <p>${payload.issue.title}:  ${payload.comment.body}
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.1/lodash.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"

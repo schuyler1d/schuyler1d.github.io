@@ -20,14 +20,17 @@ function getUsersByQuery(users) {
   $.when.apply(null, $(userList).map(getUser)).done(function() {
     //workaround: when() is annoying -- if you send an array with one item, it collapses the result
     var resList = ((userList.length == 1) ? [$.makeArray(arguments)] : $.makeArray(arguments) );
-    $(resList).each(function(i) {
-      console.log('datadata', i, userList[i], this);
-      _.templateSettings.evaluate = /{%([\s\S]+?)%}/g;
-      var tmpl = _.template($('#template div').get(0).innerHTML);
-      $(this[0]).each(function() {
-        $('#events').append(tmpl(this));
-      });
-
+    var events = _.flatten(_.map(resList, function(x) {
+      return x[0]
+    }));
+    console.log(events);
+    var d = function(x) {return (new Date(x.created_at)) };
+    events.sort(function(a,b) {return d(b) - d(a); });
+    events = _.sortedUniqBy(events, function(x){ return x.id });
+    _.templateSettings.evaluate = /{%([\s\S]+?)%}/g;
+    var tmpl = _.template($('#template div').get(0).innerHTML);
+    $(events).each(function(i) {
+      $('#events').append(tmpl(this));
     });
   });
 }
