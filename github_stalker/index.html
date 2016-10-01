@@ -7,6 +7,7 @@
         height: 16px;
         line-height: 16px;
         overflow-y: hidden;
+        overflow-x: hidden;
         text-overflow: "...";
       }
       .oneline:active, .oneline:hover {
@@ -25,13 +26,36 @@
       <li><a href="?users/nikomatsakis,users/aturon">rust</a></li>
     </ul>
 
-    <div id="events"></div>
-    <div id="template" style="display:none"><div class="card">
+    <div id="pull_requests"
+         style="float:right;min-width:400px;width:50%;"
+         >
+    </div>
+    <div id="events"
+         style="min-width:400px;width:50%;"
+         >
+    </div>
+    <div id="templatePullRequest" style="display:none"><div class="card">
+        <div class="card-content">
+          <div class="datetime">${created_at}
+            {% if (created_at != updated_at) {  %}
+              (updated ${updated_at})
+            {% } %}            
+          </div>
+          <img src="${user.avatar_url}" style="max-width: 30px" />
+          <a href="${user.url}">${user.display_login}</a>
+
+          <b><a href="${base.repo.html_url}">${base.repo.name}</a></b>
+          <div><a href="${html_url}">${title}</a></div>
+        </div>
+        
+      </div>
+    </div>
+    <div id="templateEvent" style="display:none"><div class="card">
       <div class="card-content">
         <div class="datetime">${created_at}</div>
         <img src="${actor.avatar_url}" style="max-width: 30px" />
         <a href="${actor.url}">${actor.display_login}</a>
-        <b><a href="${repo.url}">${repo.name}</a></b>
+        <b><a href="https://github.com/${repo.name}">${repo.name}</a></b>
         {% if (payload.ref) {  %}
         ${payload.ref}
         {% } %}        
