@@ -60,10 +60,21 @@
         ${payload.ref}
         {% } %}        
         <b>${type}</b>
+            <span>
+            {% if (payload.action) {  %}
+               (${payload.action})
+            {% } %}        
+            </spaN>
         {% if (payload.issue) {  %}
           <div class="oneline">
             <a title="" href="${payload.issue.html_url}">issue</a>:
             ${payload.issue.title}
+          </div>
+        {% } %}
+
+        {% if (payload.pull_request) {  %}
+          <div class="oneline">
+            title: ${payload.pull_request.title}
           </div>
         {% } %}
 
