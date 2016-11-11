@@ -4,8 +4,8 @@
     <link type="stylesheet" mimetype="text/css" href="style.css" />
     <style>
       .oneline {
-        height: 16px;
-        line-height: 16px;
+        height: 18px;
+        line-height: 17px;
         overflow-y: hidden;
         overflow-x: hidden;
         text-overflow: "...";
@@ -74,7 +74,10 @@
 
         {% if (payload.pull_request) {  %}
           <div class="oneline">
-            title: ${payload.pull_request.title}
+            <a href="${payload.pull_request.html_url}">pull request</a>:
+            ${payload.pull_request.title}
+
+            ${payload.pull_request.body}
           </div>
         {% } %}
 
