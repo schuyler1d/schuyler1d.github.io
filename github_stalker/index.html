@@ -18,12 +18,21 @@
         padding-top: 10px;
         padding-bottom: 10px;
       }
+      form[name=github] input {
+         max-width:20em;
+      }
     </style>
   </head>
   <body>
+    <form name="github" id="github">
+      github auth:
+      <input type="text" name="username" placeholder="username" />
+      <input type="password" name="password" placeholder="password" />
+      <button class="button--pill button--xsm" type="submit">for private data</button>
+    </form>
     <ul>
-      <li><a href="?orgs/MoveOnOrg,users/schuyler1d">moveon</a></li>
-      <li><a href="?users/nikomatsakis,users/aturon">rust</a></li>
+      <li><a href="?users=orgs/MoveOnOrg,users/schuyler1d">moveon</a></li>
+      <li><a href="?users=users/nikomatsakis,users/aturon">rust</a></li>
     </ul>
 
     <div id="pull_requests"
@@ -102,6 +111,7 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
             crossorigin="anonymous"></script>
+    <script src="https://raw.githubusercontent.com/philschatz/octokat.js/master/dist/octokat.js"></script>
     <script>
       $.getScript('./stalker.js?_=' + String(new Date()));
     </script>

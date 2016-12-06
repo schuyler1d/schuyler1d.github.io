@@ -1,12 +1,11 @@
-function getUser (username) {
-  if (typeof username === 'number') {
-    username = this;
-  }
+function getUser(githubUser, username) {
+  var url = 'https://api.github.com/' + username + '/events';
+  console.log('url', url);
   return $.ajax({
-    url: 'https://api.github.com/' + username + '/events',
+    url: url,
     dataType: 'json',
     success: function(data) {
-      //console.log('success', username, data);
+      console.log('success', username, data);
     },
     error: function(evt) {
       console.log('error', username, data);
@@ -14,7 +13,7 @@ function getUser (username) {
   });
 }
 
-function getOrgPullRequests(org) {
+function getOrgPullRequests(org, githubUser) {
    $.ajax({
     url: 'https://api.github.com/' + org + '/repos',
     dataType: 'json',
@@ -63,21 +62,36 @@ function renderEvents(targetHtml, templateHtml, inputList, maxItems) {
   }
 }
 
-function getUsersByQuery(users) {
-  var userList = users.split(',');
+function getUsersByQuery(query) {
+  var spl = function(t,s) {return s.split(t);}
+  var params = _.fromPairs(_.map(spl('&',query), spl.bind(0,'=')));
+  var githubUser = params.github;
+  var userList = params.users.split(',');
   console.log(userList);
 
-  $.when.apply(null, $(userList).map(getUser)).done(
+  $.when.apply(null, _.map(userList, getUser.bind(null, githubUser)) ).done(
     renderEvents('events', 'templateEvent', userList) //returns a function
   );
 
   var orgs = _.filter(userList, function(u) {
     if (/^org/.test(u)) {
-      getOrgPullRequests(u);
+      getOrgPullRequests(u, githubUser);
       return u;
     }
   });
 }
 
-getUsersByQuery(location.search.substr(1));
+function stalkerInit(evt) {
+  if (evt) {
+    evt.preventDefault();
+  }
+  var octo = new Octokat();
+  if ($('input[name=username]').val()) {
+    var octo = new Octokat({});
+  }
+  getUsersByQuery(location.search.substr(1));
+}
 
+stalkerInit();
+
+$('form#github').submit(stalkerInit);
