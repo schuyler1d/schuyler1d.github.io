@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      .img {
+        opacity: .50;
+        position: absolute;
+        top: 0;
+        width: 80%;
+      }
+      .img:hover {
+        opacity: 1;
+        z-index: 9999;
+      }
+      #image1 {
+        left: 0;
+      }
+      #image2 {
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <img class="img" id="image1" src="" />
+    <img class="img" id="image2" src="" />
+    <script
+       src="https://code.jquery.com/jquery-3.3.1.min.js"
+       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+       crossorigin="anonymous"></script>
+    <script>
+var images = [
+  'anemones.jpg',
+  'bee.jpg',
+  'bloodoranges.jpg',
+  'cave.jpg',
+  'dimetrodon.jpg',
+  'horse.jpg',
+  'island.jpg',
+  'shoes.jpg',
+  'statue.jpg'
+];
+
+var state = {
+  numberOfImages: 2,
+  current: []
+}
+
+function getRandomImage() {
+  return images[parseInt(Math.random() * images.length)]
+}
+
+function pushNewImage(excludeImages) {
+  // adds a new image and makes sure it's not one already showing
+  excludeImages = excludeImages || state.current
+  while (true) {
+    var newImage = getRandomImage()
+    // if it's not already in the current images
+    if (state.current.indexOf(newImage) == -1
+        && excludeImages.indexOf(newImage) == -1
+       ) {
+      state.current.push(newImage)
+      console.log('New image', newImage)
+      return
+    }
+  }
+  console.log('done new image')
+}
+
+function fillImages(excludeImages) {
+  // When it picks 2, that means we want to 'fill the two image slots'
+  // with new images
+  for (var i=0, len=2-state.current.length; len>i; i++) {
+    console.log(i, len)
+    pushNewImage(excludeImages)
+  }
+}
+
+function replaceImage() {
+  // When it picks 1, we basically are replacing an image
+  // if it's there
+  if (state.current.length == 1) {
+    if (Math.random() > 0.5) {
+      // 50% chance it keeps the current image
+      return
+    } else {
+      state.current = [] // blank and let it choose another below
+    }
+  } else if (state.current.length == 2) {
+    var firstOrSecond = parseInt(Math.random() * 2) // 0 or 1
+    // removes first or second by 'splicing' either from 0-1 or 1-2
+    state.current.splice(firstOrSecond, firstOrSecond + 1)
+  }
+  pushNewImage()
+}
+
+function gameLoop() {
+  var decision = parseInt(Math.random() //random number 0-0.999999
+                          * 3) // yields integer 0-2
+  console.log('Made decision', decision)
+  switch (decision) {
+  case 0:
+    if (state.current.length == 2) {
+      var oldImages = state.current
+      state.current = []
+      fillImages(oldImages)
+    } else {
+      state.current = []
+    }
+    break;
+  case 1:
+    replaceImage()
+    break;
+  case 2:
+    fillImages()
+    break;
+  }
+  // update view
+  $('#image1').attr({src: state.current[0] || ''})
+  $('#image2').attr({src: state.current[1] || ''})
+  // run the gameloop again every 1-6 seconds
+  var nextIterationDelay = 1000 + parseInt(Math.random() * 5000)
+  console.log('Next delay', nextIterationDelay)
+  setTimeout(gameLoop, nextIterationDelay)
+}
+setTimeout(gameLoop, 1000)
+    </script>
+  </body>
+</html>
