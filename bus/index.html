@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+  <title>bus soon</title>
+</head>
+<body>
+  <h2>Downtown 112th st.</h2>
+  <ul id="downtown">
+  </ul>
+  <h2>Uptown 98th st.</h2>
+  <ul id="uptown">
+  </ul>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+          crossorigin="anonymous"></script>
+  <script>
+    $.getScript('./bus.js?_=' + String(new Date()));
+  </script>
+</body>
+</html>
