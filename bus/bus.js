@@ -1,7 +1,6 @@
 var apiKey = 'cad8f9e5-dc42-427e-b4b4-d8a5289395ef'
 
 function loadBus(busline) {
-  $.getScript('https://bus-load.mta.info/api/siri/vehicle-monitoring.json?key=cad8f9e5-dc42-427e-b4b4-d8a5289395ef&OperatorRef=MTA NYCT&LineRef=MTA NYCT_M4&callback=displayBus')
 }
 // 112th st. West side
 'https://bus-load.mta.info/api/siri/stop-monitoring.json?key=cad8f9e5-dc42-427e-b4b4-d8a5289395ef&OperatorRef=MTA NYCT&MonitoringRef=MTA_403149&callback=__jp97'
@@ -11,29 +10,33 @@ function loadBus(busline) {
 
 function loadBusStop(busStop, buslines, targetDiv) {
   var url = 'https://bustime.mta.info/api/siri/stop-monitoring.json?key='+apiKey+'&OperatorRef=MTA NYCT&MonitoringRef='+busStop
+  console.log('busstop', busStop, buslines, targetDiv)
   $.ajax({
     url: url,
     dataType: 'jsonp',
     success: function(data) {
       var svc = data.Siri.ServiceDelivery
       var journeyArray = svc.StopMonitoringDelivery[0].MonitoredStopVisit
+        .filter((bus) => (bus.MonitoredVehicleJourney && buslines.indexOf(bus.MonitoredVehicleJourney.LineRef) >= 0 ))
       //var serviceArray = svc.SituationExchangeDelivery[0].PtSituationElement
+      if (journeyArray.length === 0) {
+        $(targetDiv).append('<li>No Buses in the near future :-(</li>')
+      }
       journeyArray.forEach((bus) => {
         var j = bus.MonitoredVehicleJourney
-        if (j && buslines.indexOf(j.LineRef) >= 0) {
-          var stopsAway = j.MonitoredCall.Extensions.Distances.StopsFromCall
-          var expectedArrival = j.MonitoredCall.ExpectedArrivalTime
-          var arrivalMinutes = parseInt((Number(new Date(expectedArrival)) - Number(new Date())) / 1000 / 60)
-          var vehicleRef = j.VehicleRef
-          targetDiv.append(`<li>${arrivalMinutes}min away -- ${stopsAway} stops away (${vehicleRef})</li>`)
-        }
+        var stopsAway = j.MonitoredCall.Extensions.Distances.StopsFromCall
+        var expectedArrival = j.MonitoredCall.ExpectedArrivalTime
+        var arrivalMinutes = parseInt((Number(new Date(expectedArrival)) - Number(new Date())) / 1000 / 60)
+        var minutesMessage = expectedArrival ? `${arrivalMinutes}min away` : ''
+        var vehicleRef = j.VehicleRef
+        $(targetDiv).append(`<li>${j.PublishedLineName}: ${minutesMessage} -- ${stopsAway} stops away (${vehicleRef})</li>`)
       })
     }
   })
 }
 
-loadBusStop('MTA_400041', ["MTA NYCT_M4", "MTA NYCT_M3"], $('#uptown'))
-loadBusStop('MTA_403149', ["MTA NYCT_M4"], $('#downtown'))
+loadBusStop('MTA_400041', ["MTA NYCT_M4", "MTA NYCT_M3"], '#uptown')
+loadBusStop('MTA_403149', ["MTA NYCT_M4"], '#downtown')
 /*
 __jp5(
   {"Siri":
@@ -46,7 +49,8 @@ __jp5(
            "DirectionRef":"0",
            "FramedVehicleJourneyRef":{"DataFrameRef":"2019-01-19","DatedVehicleJourneyRef":"MTA NYCT_MV_A9-Saturday-128600_M4_148"},
            "JourneyPatternRef":"MTA_M040871",
-           "PublishedLineName":"M4","OperatorRef":"MTA NYCT","OriginRef":"MTA_400353","DestinationRef":"MTA_400636","DestinationName":"WASH HTS CABRINI BLV via MADSON via BWAY",
+           "PublishedLineName":"M4",
+           "OperatorRef":"MTA NYCT","OriginRef":"MTA_400353","DestinationRef":"MTA_400636","DestinationName":"WASH HTS CABRINI BLV via MADSON via BWAY",
            "SituationRef":[{"SituationSimpleRef":"MTA NYCT_2311795e-93ca-4eea-ac49-edc948ae9096"}],
            "Monitored":true,
            "VehicleLocation":{"Longitude":-73.97268,"Latitude":40.761837},
