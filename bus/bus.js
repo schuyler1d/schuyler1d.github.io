@@ -10,7 +10,7 @@ function loadBus(busline) {
 'https://bus-load.mta.info/api/siri/stop-monitoring.json?key=cad8f9e5-dc42-427e-b4b4-d8a5289395ef&OperatorRef=MTA NYCT&MonitoringRef=MTA_400041&callback=__jp5'
 
 function loadBusStop(busStop, buslines, targetDiv) {
-  var url = 'https://bus-load.mta.info/api/siri/stop-monitoring.json?key='+apiKey+'&OperatorRef=MTA NYCT&MonitoringRef='+busStop
+  var url = 'https://bustime.mta.info/api/siri/stop-monitoring.json?key='+apiKey+'&OperatorRef=MTA NYCT&MonitoringRef='+busStop
   $.ajax({
     url: url,
     dataType: 'jsonp',
