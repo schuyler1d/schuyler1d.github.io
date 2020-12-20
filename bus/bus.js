@@ -8,6 +8,8 @@ function loadBus(busline) {
 // 98th st. East side
 'https://bus-load.mta.info/api/siri/stop-monitoring.json?key=cad8f9e5-dc42-427e-b4b4-d8a5289395ef&OperatorRef=MTA NYCT&MonitoringRef=MTA_400041&callback=__jp5'
 
+// m60 116th st. https://bustime.mta.info/api/siri/vehicle-monitoring.json?key=0751e36e-4a17-49a5-8dfd-292c370e1296&OperatorRef=MTA NYCT&LineRef=MTA NYCT_M60+&callback=__jp9
+
 function loadBusStop(busStop, buslines, targetDiv) {
   var url = 'https://bustime.mta.info/api/siri/stop-monitoring.json?key='+apiKey+'&OperatorRef=MTA NYCT&MonitoringRef='+busStop
   console.log('busstop', busStop, buslines, targetDiv)
@@ -37,6 +39,7 @@ function loadBusStop(busStop, buslines, targetDiv) {
 
 loadBusStop('MTA_400041', ["MTA NYCT_M4", "MTA NYCT_M3"], '#uptown')
 loadBusStop('MTA_403149', ["MTA NYCT_M4"], '#downtown')
+
 /*
 __jp5(
   {"Siri":
