@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Schuyler Duveen's Resume</title>
+    <!-- $ 
+         ~/wkhtmltopdf/static-build/trusty-amd64/dist/bin/wkhtmltopdf \
+            --print-media-type index.html duveen-resume.pdf
+      -->
+    <style>
+      @media print {
+         a.pdf-link { display:none; }
+         a.web-link {
+            display:block;
+            position:absolute; right:0px; top:0px;
+            height:2em;
+         }
+         a {
+            text-decoration:none;
+         }
+         /*  don't show hrefs in pdf anymore -- dumb   */
+         /*
+         section a:after, a.github:after { 
+            content: " (" attr(href) ") "; 
+            color:black;
+            font-size:11px;
+         }*/
+         body.resume { 
+           font-size: 90%;
+           font-family: Times New Roman, serif; 
+         }
+      }
+      a.pdf-link {
+         position:absolute; right:10px; top:10px;
+      }
+      a {
+        color:#111177;
+      }
+      a:visited {
+        color:#111144;
+      }
+      .web-link { display:none; }
+      body {
+        font-family: helvetica, sans-serif;
+      }
+      .profile {
+         padding:12px 0 12px;
+      }
+      .identity {
+         text-align:center;
+	 margin-bottom:10px;
+      }
+      h1 {
+         font-variant:small-caps;
+	 margin:3px 0;
+         font-size:1.4em;
+      }
+      h2, .h2 {
+         margin:0 0 2px 0px;
+         font-size:1.05em;
+	 padding-right:0.5em;
+         display: inline-block;
+      white-space:nowrap;
+      }
+      h3 {
+         margin:1px 0;      
+         font-size:1em;
+
+      }
+      h4, .h4 {
+         margin:0;
+	 padding-right:0.4em;
+      }
+      ul.project {
+	 list-style:circle;
+      }
+      ul.plist {
+         padding-left:0.7em;
+         padding-top:2px;
+      }
+      ul.projects {
+         padding-left:0.7em;
+      }
+      ul.projects > li {
+         padding-top:8px;
+      }
+      ul, .tech, .other { 
+	 list-style:none;
+         clear:both;
+         margin-top:0;
+      }
+      .other { 
+         list-style:circle;
+      }
+      time {
+	 padding-left:1px;
+         font-style:italic;
+         line-height:20px;
+      }
+      q {font-style:italic;}
+      .when {
+        display: inline-block;
+        white-space:nowrap;
+      }
+      section {
+	 margin-top:7px;
+	 padding-top:7px;
+      }
+      .draft {
+        color:#993300;
+      }
+      .tech b.h4, .profile .h4 {display:none;}
+      div.profile:before {
+        content: "Profile: ";
+        font-weight: bold;
+      }
+
+      div.profile {
+        text-indent: -3.8em;
+        padding-left: 3.8em;
+      }
+      div.tech:before {
+        content: "Tech: ";
+        font-weight: bold;
+      }
+
+      div.tech {
+        text-indent: -3.0em;/*var techindent*/
+        padding-left: 3.8em;/*workmargin+techindent*/
+        padding-right: 1em;
+        padding-top: 2px;
+        padding-bottom: 2px;
+      }
+      .work {
+        padding-left: 0.8em;/*var workmargin*/
+      }
+      .tech {
+         background-color:#eeeeff;
+         padding-left: 0.8em;/*var workmargin */
+      }
+      .workplace {
+        background-color:#cccccc;
+        padding:4px 0 3px 0.2em;
+        overflow:hidden;
+      }
+
+    </style>
+  </head>
+  <body class="resume">
+    <div itemscope class="identity" 
+         itemtype="http://microformats.org/profile/hcard">
+      <h1 itemprop="given-name">Schuyler Duveen</h1>
+      <a itemprop="email" href="mailto:schuyler1d@gmail.com">schuyler1d@gmail.com</a> 
+      <span itemprop="tel">646-732-8854</span>
+      <a class="github" itemprop="github" href="https://github.com/schuyler1d">GitHub</a>
+    </div>
+    <div class="profile">
+      <b class="h4">Profile:</b> 
+
+      Skilled at user experience, specification, and
+      architecture. Outstanding ability to learn, apply new
+      technologies, and translate client requirements into valid
+      technical solutions.  Excellent at communicating and leadership
+      through action.
+
+    </div>
+    <section>
+          <div class="workplace">
+            <b class="h2">MoveOn</b>
+            <div class="when">
+              <time>2015-present</time>, Lead Developer
+            </div>
+          </div>
+    <div class="tech">
+      <b class="h4">Technology:</b> 
+      Python/Django, React.js, Redis, AWS Lambda (serverless), VPN/VPC networking
+    </div>
+    <div class="work">
+    <h3>Favorite Projects</h3>
+    <ul class="projects">
+      <li><b class="h4"><a href="https://github.com/MoveOnOrg/Spoke">Spoke</a></b>
+          <span>(re-architected and fostered now-thriving open source community)</span>
+          <ul class="project">
+            <li>Documented project and focused on an easy startup experience, so it became one of the most active projects at <a href="https://progressivehacknight.org/">Progressive Hack Night (nyc)</a> and the <a href="http://progcode.org/">Progressive Coders Network</a></li>
+            <li>Used by (and with contributions from) Australia (GetUp), the SEIU, AFL-CIO, DSA, Bernie Sanders &amp; Warren campaigns, and dozens of candidates, including two other primary presidential campaigns. Over 500 separate organizations used it during the 2020 election cycle.</li>
+          </ul>
+      <li><b class="h4"><a href="https://github.com/MoveOnOrg/sharebandit">Sharebandit</a></b>
+        <span>(Architected and implemented backend)</span>
+        <ul class="project">
+          <li>Named after the <a href="https://en.wikipedia.org/wiki/Multi-armed_bandit">Bayesian bandit algorithm</a>, it offered multiple
+            permutations of title and image for when a page was shared on Facebook, eventually and automatically "choosing" a winner to be shared with future clicks to share the page.</li>
+        </ul>
+      <li><b class="h4">Team Support and Development</b>
+        <ul class="project">
+        <li>Participated in formal and informal mentorship for developers on the team.</li>
+        <li>Organized and wrote hiring process and test plans (w/ <a href="https://www.testdome.com/">testdome</a>) that scaled for a small tech team and respected the dignity of candidates.</li>
+        <li>Lead team in a reorganization of work/delegation we called "Realms" to balance focus and siloization.</li>
+          </ul></li>
+    </ul>
+    </div>
+    </section>
+    <section>
+          <div class="workplace">
+            <b class="h2">New York Public Radio</b>
+            <div class="when">
+              <time>2011-2015</time>, Director of Digital Technology
+            </div>
+          </div>
+    <div class="tech">
+      <b class="h4">Technology:</b> 
+      Python/Django,
+      Varnish, Memcache, Puppet, Ubuntu:AWS/Rackspace, Postgres, Git, 
+      Backbone.js, PhoneGap
+    </div>
+    <div class="work">
+    <h3>Favorite Projects</h3>
+    <ul class="projects">
+      <li><b class="h4">Managed developer team</b>
+        <ul class="project">
+          <li>Built team from two developers to eight, introducing Git and practices like Agile and 20% time
+          <li>Oversaw the scaling of <a href="http://www.wnyc.org/">WNYC</a>, <a href="http://www.wqxr.org/">WQXR</a>, and national show sites like <a href="http://radiolab.org/">Radiolab</a> and <a href="http://onthemedia.org/">On the Media</a>
+          <li>Performed system administration duties throughout, along with
+              establishing a DevOps team
+          <li>Brought vendor-based mobile apps in-house with a small internal mobile team
+          <li>Managed tech hiring and support infrastructure for <a href="http://datanews.tumblr.com/">WNYC's DataNews group</a>
+        </ul>
+      <li><b class="h4">Cross-Domain AJAX Login and Tracking</b>
+          <span>(Architected and helped implement)</span>
+          <ul class="project">
+            <li>Consolidated login across several websites and substantially increased performance by removing sessions from main website requests
+          </ul>
+      <li><b class="h4"><a href="http://www.wnyc.org/mobile/">Discover</a> in WNYC Mobile App</b>
+        <span>(Architected and implemented backend)</span>
+        <ul class="project">
+          <li>"Choose some topics and we'll build a playlist for your offline subway commute."
+        </ul>
+      <li><b class="h4">Audio Player Twitter Card</b>
+        <span>(Architected and implemented)</span>
+        <a href="http://www.niemanlab.org/2014/05/you-can-add-audio-and-video-players-inside-your-tweets-just-as-wnyc-did-for-a-maya-angelou-interview/">news coverage</a>
+    </ul>
+    </div>
+    </section>
+    <section>
+          <div class="workplace">
+            <b class="h2">Columbia University Center for New Media Teaching and Learning</b>
+            <div class="when">
+              <time>2005-2011</time>, Senior Programmer
+            </div>
+          </div>
+    <div class="tech">
+      <b class="h4">Technology:</b> Open Source, Python/Django, OpenLayers.JS+GeoDjango, 
+      PHP+Drupal, Apache, 
+      Linux+Ubuntu+Xen, MySQL/Postgres
+    </div>
+    <div class="work">
+    <h3>Favorite Projects</h3>
+    <ul class="projects">
+      <li><b class="h4"><a href="https://mediathread.ctl.columbia.edu/">MediaThread</a></b> <a href="https://github.com/ccnmtl/mediathread">code</a>
+      <span>(Tech Lead)</span>
+      <ul class="project">
+          <li>Annotation and analysis platform for video and images within websites for educational and scholarly purposes
+	  </li>
+	  <li>Conceived, architected, programmed, and supervised other programmer contributions.
+	  </li>
+	  <li>Presented at Open Video Conference 2010. In 2011, used in 20 courses and growing, with MIT, ArtStor running separate instances. Worked with outside media archives' technical groups to support their sites</li>
+      </ul>
+      </li>
+      <li><b class="h4"><a href="https://masivukeni2.ctl.columbia.edu/">Masivukeni, South Africa</a></b> <a href="https://github.com/ccnmtl/smart_sa">code</a>
+      <span>(Tech Lead)</span>
+      <ul class="project">
+          <li>HIV-treatment adherence intervention for offline clinics in South Africa </li>
+          <li>Used HTML5 localStorage (and earlier Firefox implementation) 
+	  to store patient data for later transfer</li>
+	  <li>Comprehensive Selenium functional tests. Clients reported: "not a single issue" 
+	  </li>
+      </ul>
+      </li>
+      <li><b class="h4"><a href="http://maap.columbia.edu/">Mapping the African-American Past</a></b>
+      <span>(Front-end Dev)</span>
+      <ul class="project">
+        <li>
+         <a href="http://maap.columbia.edu/place/then.html">
+	   Immersive historic maps of New York City
+	 </a> (<a href="https://github.com/ccnmtl/maap/issues/1">bugreport</a>) 
+	 for contextualizing African-American historical locations
+       </li>
+        <li>Archivist Round Table Award 2009
+
+        </li>
+      </ul>
+      </li>
+      <li>
+	<b class="h4">Drupal CMS farm</b> <a href="https://drupal.org/project/multisite_manager">multisite_manager code</a>
+      <span>(Initiated on seeing a need)</span>
+	<ul class="project">
+	<li>Secure way for project managers to create new sites easily without a
+      programmer
+	</li>
+	<li>Maintenance of a public Drupal module (actively used on 200+ sites). Patches submitted and accepted for Drupal-core
+	</li>
+	</ul>
+      </li>
+    </ul>
+    </div>
+    </section>
+    <section>
+          <div class="workplace">
+            <b class="h2">Columbia University: Academic Information Systems</b>
+            <div class="when">
+              <time>2000-2005</time>, User Services Consultant (2 grade promotions)
+            </div>
+          </div>
+    <div class="tech">
+      <b class="h4">Technology:</b> Perl, Remedy+Oracle, Solaris, Apache
+    </div>
+    <div class="work">
+    <h3>Favorite Projects</h3>
+    <ul class="projects">
+      <li><b class="h4">Remedy Request Tracking System (Project Manager)</b>
+      <ul class="project">
+	<li> Architected and implemented for three IT organizations and multiple IT Departments </li>
+	<li> Met with managers and users to develop requirements, document specifications for unique and general business needs</li>
+	<li> Trained all IT groups on new system and provided online documentation</li>
+      </ul>
+      </li>
+      <li>
+	<b class="h4">User Knowledge Base for Technical Support</b>
+	<ul class="project">
+	  <li> Planned and designed website; Developed initial knowledge base, including FAQs and standard requests </li>
+	  <li> Designed and Implemented reports to improve the site and monitor usage by all users</li>
+	</ul>
+      </li>
+    </ul>
+    <b class="h4">Other Responsibilities and Projects:</b>
+    <ul class="other">
+	  <li> Backup Computer Security Responder: compromised on-campus computers, viruses, and copyright violation complaints</li>
+	  <li> Internal support tools - UNIX and Web scripts to assist front-line Help Desk consultants</li>
+    </ul>
+    </div>
+    </section>
+    <section>
+      <div class="workplace simplesection">
+        <b class="h2">Some Side/Short-term Projects</b>
+      </div>
+    <ul class="plist">
+      <li><time>2018-present</time> <a href="https://github.com/next-harm-reduction/encrypted-post">Encrypted enrollment form</a> for Harm Reduction access/supplies (<a href="https://nextdistro.org/">NEXT</a>)
+      </li>
+      <li><time>2004</time> <a href="https://ouwi.org/">Ouwi Art Project</a> - Created a non-linear writing system and constructed language
+      </li>
+      <li><time>1993-1995</time> Educational Computer Camp for Communications Exceptionalities (ECCCE), London, Canada: Camp Counselor CAD instructor to deaf and learning-disabled campers, aged 12-17
+      </li>
+    </ul>
+    </section>
+    <section>
+      <div class="workplace simplesection">
+        <b class="h2">Education</b>
+      </div>
+    <ul class="plist">
+      <li>
+	<time>2001-05</time> Columbia University School of General Studies: B.A., Mathematics
+      </li>
+      <li>
+	<time>1996-99</time> Columbia School of Engineering and Applied Science (Electrical Engineering) 
+      </li>
+      <li><time>Back in the day</time> Java 1.0, C, Pascal, 80386 asm, Commodore128 BASIC
+      </li>
+    </ul>
+    </section>
+  </body>
+</html>
