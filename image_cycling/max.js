@@ -57,7 +57,7 @@ function startup() {
 function gameLoop() {
   // SECTION 1: Do we need to start a new image?
   var numActive = 0;
-  var nextChoice = Math.floor(Math.random() * (directions.length - 2));
+  var nextChoice = Math.floor(Math.random() * (directions.length - 1));
   var nextIndex = null;
   for (var i=0, l=directions.length; i<l; i++) {
     if (nextChoice == 0) {
