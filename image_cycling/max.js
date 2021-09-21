@@ -40,14 +40,14 @@ function bang() {
 
 function msg_float(r) {
   if (r != powerSwitch) {
+    if (runningJob) {
+      clearInterval(runningJob);
+    }
     if (powerSwitch) {
-      // startup
-    } else {
-      // power-off
+      startup();
     }
   }
   powerSwitch = r;
-  outlet(9, r);
 }
 
 function startup() {
