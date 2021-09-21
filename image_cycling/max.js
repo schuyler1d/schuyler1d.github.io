@@ -69,7 +69,7 @@ function gameLoop() {
       nextChoice -= 1;
     }
   }
-  if (numActive < 3 && nextIndex !== null) {
+  if (numActive < 2 && nextIndex !== null) {
     // how much to increment each time for fadeRange to go from 0->1
     directions[nextIndex] = 1 / runsPerSecond / (fadeRange / 1000);
     // from 1-> random()*
