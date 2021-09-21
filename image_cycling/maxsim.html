@@ -38,6 +38,30 @@
         var color = Math.round(value * 255);
         $('#' + outputIndex).css({backgroundColor: "rgb(" + color + ", 0, 0)"})
       }
+
+      function Task(func) {
+        var self = this;
+        this.func = func;
+        this.execute = func;
+        this.cancelable = null;
+
+        this.repeat = function(count) {
+          if (count > 0) {
+            func();
+            self.cancelable = setTimeout(
+              function() {
+                self.repeat(--count);
+              },
+              self.interval || 1000
+            );
+          }
+        };
+        this.cancel = function() {
+          if (self.cancelable) {
+            clearTimeout(self.cancelable);
+          }
+        }
+      }
     </script>
     <script src="./max.js"></script>
     <script>

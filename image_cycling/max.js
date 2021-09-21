@@ -1,6 +1,7 @@
 // MAX javascript component to cycle through 9 images
 // randomly selecting 1-3 images and fading them in/out
 // https://docs.cycling74.com/max7/tutorials/javascriptchapter01
+// Tasks/intervals: https://docs.cycling74.com/max8/tutorials/javascriptchapter03
 
 // inlets and outlets
 inlets = 1 // on or off
@@ -29,20 +30,17 @@ var fadeRange = 2000;
 // maxFullOnRange: longest possible period (ms) to stay fully on (beyond fade in/out time)
 var maxFullOnRange = 4000;
 
+var tsk = new Task(gameLoop, this);
+
 function bang() {
   powerSwitch = 1;
-  // startup (a different way)
-  if (runningJob) {
-    clearInterval(runningJob);
-  }
+  tsk.cancel();
   startup();
 }
 
 function msg_float(r) {
   if (r != powerSwitch) {
-    if (runningJob) {
-      clearInterval(runningJob);
-    }
+    tsk.cancel();
     if (powerSwitch) {
       startup();
     }
@@ -51,7 +49,8 @@ function msg_float(r) {
 }
 
 function startup() {
-  runningJob = setInterval(gameLoop, parseInt(1000 / runsPerSecond));
+  tsk.interval = parseInt(1000 / runsPerSecond);
+  tsk.repeat(10000000); // a BIG number to repeat for a long time
 }
 
 function gameLoop() {
