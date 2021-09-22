@@ -25,6 +25,7 @@
       <div class="outlet" id="8">8</div>
     </div>
     <div id="postmessage"></div>
+    <button id="toggle" style="display:none">To Zero</button>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -65,10 +66,18 @@
     </script>
     <script src="./max.js"></script>
     <script>
-      if (window.bang) {
+      var current = 1;
+      if (window.msg_float) {
+        window.msg_float(current);
+        $('#toggle')
+          .show()
+          .click(function() {
+            $(this).html('To ' + current);
+            current = Number(!current);
+            window.msg_float(current);
+          });
+      } else if (window.bang) {
         bang();
-      } else if (window.msg_float) {
-        window.msg_float(1);
       }
     </script>
   </body>

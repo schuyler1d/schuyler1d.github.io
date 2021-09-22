@@ -8,27 +8,43 @@ inlets = 1 // on or off
 outlets = 9 // opacity of 9 images
 
 // global variables
+var runsPerSecond = 60;
+
+// 2000 ms to fade in/out
+var fadeRange = 2000;
+// How much do images fade-in at their maximums? Between 0->1
+var maxFadeIn = 0.4;
+// maxFullOnRange: longest possible period (ms) to stay fully on (beyond fade in/out time)
+var maxFullOnRange = 4000;
+// how often should a blank be chosen compared to an image
+// 0.5 will mean 1/3 time there will be a single image and 1/3^2=1/9 chance that no image will be shown
+var blankRatio = 0.5;
+
+
 var powerSwitch = 0;
 var runningJob = null;
+
+function zeroArray(len) {
+  var arr = new Array(len);
+  for (var i=0,l=len; i<l; i++) {
+    arr[i] = 0;
+  }
+  return arr;
+}
+
 // directions: positive/negative depending on fading in/out
-//             
-var directions = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+// NOTE: this array should
+// to make a 'blank' more likely and 0s to this array and the states[] and maximums[] arrays
+var directions = zeroArray(Math.ceil(outlets * (1 + blankRatio)));
 
 // states
-var states = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+var states = zeroArray(Math.ceil(outlets * (1 + blankRatio)));
 
 // maximums: sort of the 'top of the yo-yo' 
 //   State keeps going until it hits the maximum
 //   Even though opacity is clamped to 1.
 //   state can go above that post-fadein, to 'stay on'
-var maximums = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-var runsPerSecond = 60;
-
-// 2000 ms to fade in/out
-var fadeRange = 2000;
-
-// maxFullOnRange: longest possible period (ms) to stay fully on (beyond fade in/out time)
-var maxFullOnRange = 4000;
+var maximums = zeroArray(Math.ceil(outlets * (1 + blankRatio)));
 
 var tsk = new Task(gameLoop, this);
 
@@ -39,10 +55,16 @@ function bang() {
 }
 
 function msg_float(r) {
-  if (r != powerSwitch) {
+  if (r) {
     tsk.cancel();
-    if (powerSwitch) {
-      startup();
+    startup();
+  }
+  if (powerSwitch == 1 && r == 0) {
+    // end: should fade everything out
+    for (var i=0,l=directions.length; i<l; i++) {
+      if (directions[i] > 0) {
+        directions[i] = -directions[i];
+      }
     }
   }
   powerSwitch = r;
@@ -68,7 +90,7 @@ function gameLoop() {
       nextChoice -= 1;
     }
   }
-  if (numActive < 2 && nextIndex !== null) {
+  if (powerSwitch && numActive < 2 && nextIndex !== null) {
     // how much to increment each time for fadeRange to go from 0->1
     directions[nextIndex] = 1 / runsPerSecond / (fadeRange / 1000);
     // from 1-> random()*
@@ -90,7 +112,9 @@ function gameLoop() {
     }
 
     // output new value
-    outlet(j, Math.min(1, states[j]));
+    if (j <= outlets) {
+      outlet(j, maxFadeIn * Math.min(1, states[j]));
+    }
   }
 
 }
