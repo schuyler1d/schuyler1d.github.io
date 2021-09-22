@@ -112,7 +112,7 @@ function gameLoop() {
     }
 
     // output new value
-    if (j <= outlets) {
+    if (j < outlets) {
       outlet(j, maxFadeIn * Math.min(1, states[j]));
     }
   }
