@@ -10,12 +10,18 @@ outlets = 9 // opacity of 9 images
 // global variables
 var runsPerSecond = 60;
 
+// keep at 1 unless you want things to go faster, and then increase
+var simSpeed = 1;
 // 2000 ms to fade in/out
-var fadeRange = 2000;
+var fadeRange = 2000 / simSpeed;
 // How much do images fade-in at their maximums? Between 0->1
 var maxFadeIn = 0.4;
+
+// minFullOnRange: minimum period after fade-in occurs
+var minFullOnRange = 2000 / simSpeed;
 // maxFullOnRange: longest possible period (ms) to stay fully on (beyond fade in/out time)
-var maxFullOnRange = 4000;
+// MUST be bigger than minFullOnRange (or very weird things will happen)
+var maxFullOnRange = 4000 / simSpeed;
 // how often should a blank be chosen compared to an image
 // 0.5 will mean 1/3 time there will be a single image and 1/3^2=1/9 chance that no image will be shown
 var blankRatio = 0.5;
@@ -94,7 +100,7 @@ function gameLoop() {
     // how much to increment each time for fadeRange to go from 0->1
     directions[nextIndex] = 1 / runsPerSecond / (fadeRange / 1000);
     // from 1-> random()*
-    maximums[nextIndex] = 1 + (Math.random() * maxFullOnRange / fadeRange);
+    maximums[nextIndex] = 1 + (minFullOnRange + Math.random() * (maxFullOnRange - minFullOnRange)) / fadeRange;
   }
 
   // SECTION 2: update all the image values
