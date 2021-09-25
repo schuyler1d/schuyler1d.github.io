@@ -70,6 +70,7 @@ function msg_float(r) {
     for (var i=0,l=directions.length; i<l; i++) {
       if (directions[i] > 0) {
         directions[i] = -directions[i];
+        states[i] = Math.min(1, states[i]);
       }
     }
   }
@@ -114,7 +115,7 @@ function gameLoop() {
     // flip direction if we hit the 'top'
     if (states[j] > 0 && states[j] >= maximums[j]) {
       // negate
-      directions[j] = -directions[j];
+      directions[j] = -Math.abs(directions[j]);
     }
 
     // output new value
