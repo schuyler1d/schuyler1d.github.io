@@ -56,6 +56,7 @@ var tsk = new Task(gameLoop, this);
 
 function bang() {
   powerSwitch = 1;
+  post("bang");
   tsk.cancel();
   startup();
 }
@@ -63,9 +64,11 @@ function bang() {
 function msg_float(r) {
   if (r) {
     tsk.cancel();
+    post("msg_float startup");
     startup();
   }
   if (powerSwitch == 1 && r == 0) {
+    post("msg_float fade out");
     // end: should fade everything out
     for (var i=0,l=directions.length; i<l; i++) {
       if (directions[i] > 0) {
@@ -97,6 +100,7 @@ function gameLoop() {
       nextChoice -= 1;
     }
   }
+  post("gameLoop: " + numActive);
   if (powerSwitch && numActive < 2 && nextIndex !== null) {
     // how much to increment each time for fadeRange to go from 0->1
     directions[nextIndex] = 1 / runsPerSecond / (fadeRange / 1000);
