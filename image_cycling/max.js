@@ -13,7 +13,7 @@ var runsPerSecond = 60;
 // keep at 1 unless you want things to go faster, and then increase
 var simSpeed = 1;
 // 2000 ms to fade in/out
-var fadeRange = 2000 / simSpeed;
+var fadeRange = 500 / simSpeed;
 // How much do images fade-in at their maximums? Between 0->1
 var maxFadeIn = 0.4;
 
@@ -54,13 +54,6 @@ var maximums = zeroArray(Math.ceil(outlets * (1 + blankRatio)));
 
 var tsk = new Task(gameLoop, this);
 
-function bang() {
-  powerSwitch = 1;
-  post("bang");
-  tsk.cancel();
-  startup();
-}
-
 function msg_float(r) {
   if (r) {
     tsk.cancel();
@@ -71,8 +64,8 @@ function msg_float(r) {
     post("msg_float fade out");
     // end: should fade everything out
     for (var i=0,l=directions.length; i<l; i++) {
-      if (directions[i] > 0) {
-        directions[i] = -directions[i];
+      if (states[i] > 0 || directions[i] != 0) {
+        directions[i] = -Math.abs(directions[i]);
         states[i] = Math.min(1, states[i]);
       }
     }
@@ -100,12 +93,13 @@ function gameLoop() {
       nextChoice -= 1;
     }
   }
-  post("gameLoop: " + numActive);
+  // post("gameLoop: " + numActive);
   if (powerSwitch && numActive < 2 && nextIndex !== null) {
     // how much to increment each time for fadeRange to go from 0->1
-    directions[nextIndex] = 1 / runsPerSecond / (fadeRange / 1000);
+    directions[nextIndex] = (1 / runsPerSecond) / (fadeRange / 1000);
     // from 1-> random()*
     maximums[nextIndex] = 1 + (minFullOnRange + Math.random() * (maxFullOnRange - minFullOnRange)) / fadeRange;
+    // post("new max: dir=" + directions[nextIndex] + " max=" + maximums[nextIndex]);
   }
 
   // SECTION 2: update all the image values
@@ -113,6 +107,9 @@ function gameLoop() {
     states[j] += directions[j];
     // set direction to 0 if state is 0
     if (states[j] <= 0) {
+      if (directions[j] != 0) {
+        // post("zeroed index " + j + " dir=" + directions[j]);
+      }
       states[j] = 0;
       directions[j] = 0;
     }
