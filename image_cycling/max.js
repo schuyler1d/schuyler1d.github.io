@@ -14,6 +14,7 @@ var runsPerSecond = 60;
 var simSpeed = 1;
 // 2000 ms to fade in/out
 var fadeRange = 500 / simSpeed;
+var fadeImmediately = true;
 // How much do images fade-in at their maximums? Between 0->1
 var maxFadeIn = 0.4;
 
@@ -65,8 +66,13 @@ function msg_float(r) {
     // end: should fade everything out
     for (var i=0,l=directions.length; i<l; i++) {
       if (states[i] > 0 || directions[i] != 0) {
-        directions[i] = -Math.abs(directions[i]);
-        states[i] = Math.min(1, states[i]);
+        if (fadeImmediately) {
+          directions[i] = 0;
+          states[i] = 0;
+        } else {
+          directions[i] = -Math.abs(directions[i]);
+          states[i] = Math.min(1, states[i]);
+        }
       }
     }
   }
