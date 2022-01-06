@@ -3,13 +3,13 @@
   <head>
     <title>Schuyler Duveen's Resume</title>
     <!-- $ 
-         ~/wkhtmltopdf/static-build/trusty-amd64/dist/bin/wkhtmltopdf \
-            --print-media-type index.html duveen-resume.pdf
+         wkhtmltopdf --print-media-type index.html duveen-resume.pdf
+         If you are looking at this source, the icky class="h2" style came from (an old? version of) wkhtmltopdf's limitations
       -->
     <style>
       @media print {
          a.pdf-link { display:none; }
-         a.web-link {
+         a.web-link {h4
             display:block;
             position:absolute; right:0px; top:0px;
             height:2em;
@@ -62,7 +62,7 @@
       white-space:nowrap;
       }
       h3 {
-         margin:1px 0;      
+         margin:4px 0;      
          font-size:1em;
 
       }
@@ -104,19 +104,26 @@
       section {
 	 margin-top:7px;
 	 padding-top:7px;
+         line-height: 21px;
+
       }
       .draft {
         color:#993300;
       }
-      .tech b.h4, .profile .h4 {display:none;}
+      .tech b.h4, .profile .h4 {
+          display:none;
+      }
       div.profile:before {
         content: "Profile: ";
         font-weight: bold;
       }
 
       div.profile {
-        text-indent: -3.8em;
-        padding-left: 3.8em;
+        /*text-indent: -4.5em;
+        padding-left: 4.5em;*/
+        /* This parses different in wiki2pdf than on the web */
+        text-indent: -63px;
+        padding-left: 63px;
       }
       div.tech:before {
         content: "Tech: ";
@@ -129,18 +136,19 @@
         padding-right: 1em;
         padding-top: 2px;
         padding-bottom: 2px;
+         line-height: 25px;
       }
       .work {
         padding-left: 0.8em;/*var workmargin*/
       }
       .tech {
-         background-color:#eeeeff;
+         background-color: #eeeeff;
          padding-left: 0.8em;/*var workmargin */
       }
       .workplace {
-        background-color:#cccccc;
-        padding:4px 0 3px 0.2em;
-        overflow:hidden;
+        background-color: #cccccc;
+        padding: 4px 0 3px 0.5em;
+        overflow: hidden;
       }
 
     </style>
@@ -156,32 +164,33 @@
     <div class="profile">
       <b class="h4">Profile:</b> 
 
-      Skilled at user experience, specification, and
-      architecture. Outstanding ability to learn, apply new
-      technologies, and translate client requirements into valid
-      technical solutions.  Excellent at communicating and leadership
-      through action.
-
+      Passion and experience in scaling technology and tech team productivity,
+      supporting equity and happiness at work with good process and human connections. Driven by the user experience.
     </div>
     <section>
           <div class="workplace">
             <b class="h2">MoveOn</b>
             <div class="when">
-              <time>2015-present</time>, Lead Developer
+              <time>2015-Dec 2021</time>, Lead Developer
             </div>
           </div>
     <div class="tech">
       <b class="h4">Technology:</b> 
-      Python/Django, React.js, Redis, AWS Lambda (serverless), VPN/VPC networking
+      Python/Django, React.js, Redis, AWS Lambda (serverless), Redshift, et al, VPN/VPC networking, ActionKit CRM
     </div>
     <div class="work">
     <h3>Favorite Projects</h3>
     <ul class="projects">
       <li><b class="h4"><a href="https://github.com/MoveOnOrg/Spoke">Spoke</a></b>
-          <span>(re-architected and fostered now-thriving open source community)</span>
+          <span>(built and fostered a now-thriving open source project and community)</span>
           <ul class="project">
-            <li>Documented project and focused on an easy startup experience, so it became one of the most active projects at <a href="https://progressivehacknight.org/">Progressive Hack Night (nyc)</a> and the <a href="http://progcode.org/">Progressive Coders Network</a></li>
-            <li>Used by (and with contributions from) Australia (GetUp), the SEIU, AFL-CIO, DSA, Bernie Sanders &amp; Warren campaigns, and dozens of candidates, including two other primary presidential campaigns. Over 500 separate organizations used it during the 2020 election cycle.</li>
+            <li>Manages campaigns and volunteers for "textbanking" (advocacy through SMS like phonebanking)</li>
+            <li>Focused on an easy startup experience to bring in participation.
+                Maintained backwards compatibility/easy upgrade paths and developed
+                layered community with contributing organizations.
+              It became one of the most active progressive open-source projects.
+            </li>
+            <li>Over 500 separate organizations used it during the 2020 election cycle. Contributors and users including the SEIU, AFL-CIO, Bernie Sanders &amp; Warren campaigns, the DNC, and dozens of candidates, including multiple primary presidential campaigns. </li>
           </ul>
       <li><b class="h4"><a href="https://github.com/MoveOnOrg/sharebandit">Sharebandit</a></b>
         <span>(Architected and implemented backend)</span>
@@ -191,8 +200,8 @@
         </ul>
       <li><b class="h4">Team Support and Development</b>
         <ul class="project">
-        <li>Participated in formal and informal mentorship for developers on the team.</li>
-        <li>Organized and wrote hiring process and test plans (w/ <a href="https://www.testdome.com/">testdome</a>) that scaled for a small tech team and respected the dignity of candidates.</li>
+        <li>Formal and informal mentorship and training for the developer team and organization.</li>
+        <li>Organized and wrote hiring processes and test plans (w/ <a href="https://www.testdome.com/">testdome</a>) that scaled for a small tech team and respected the dignity of candidates.</li>
         <li>Lead team in a reorganization of work/delegation we called "Realms" to balance focus and siloization.</li>
           </ul></li>
     </ul>
