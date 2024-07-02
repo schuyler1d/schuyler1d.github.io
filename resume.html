@@ -44,6 +44,7 @@
       }
       .profile {
          padding:12px 0 12px;
+         font-size: 1.3em;
       }
       .identity {
          text-align:center;
@@ -114,7 +115,7 @@
           display:none;
       }
       div.profile:before {
-        content: "Profile: ";
+        content: "Profile:";
         font-weight: bold;
       }
 
@@ -122,8 +123,8 @@
         /*text-indent: -4.5em;
         padding-left: 4.5em;*/
         /* This parses different in wiki2pdf than on the web */
-        text-indent: -63px;
-        padding-left: 63px;
+        text-indent: -3.8em;
+        padding-left: 4.1em;
       }
       div.tech:before {
         content: "Tech: ";
@@ -146,7 +147,7 @@
          padding-left: 0.8em;/*var workmargin */
       }
       .workplace {
-        background-color: #cccccc;
+        background-color: #cedede;
         padding: 4px 0 3px 0.5em;
         overflow: hidden;
       }
@@ -161,17 +162,51 @@
       <span itemprop="tel">646-732-8854</span>
       <a class="github" itemprop="github" href="https://github.com/schuyler1d">GitHub</a>
     </div>
+    <a class="pdf-link" href="./resume.pdf">(pdf)</a>
     <div class="profile">
       <b class="h4">Profile:</b> 
 
       Passion and experience in scaling technology and tech team productivity,
-      supporting equity and happiness at work with good process and human connections. Driven by the user experience.
+      supporting equity and happiness at work 
+
+      <br />with good process and human connections. Driven by the user experience.
     </div>
     <section>
           <div class="workplace">
-            <b class="h2">MoveOn</b>
+            <b class="h2">Principal Software Engineer</b>
             <div class="when">
-              <time>2015-Dec 2021</time>, Lead Developer
+              <time>2022-Present</time>, <a href="https://pivotbio.com/">Pivot Bio</a>
+            </div>
+          </div>
+    <div class="tech">
+      <b class="h4">Technology:</b> 
+      Python/Django, SQL, Databricks/PySpark, Terraform, AWS Batch, RDS, Lambda (serverless), et al
+    </div>
+    <div class="work">
+    <h3>Favorite Projects</h3>
+    <ul class="projects">
+      <li><b class="h4">Data warehouse build-out</b>
+          <span>(Implemented w/ Databricks)</span>
+          <ul class="project">
+            <li>Starting from a multi-siloed environment, led project from requirements gathering across the org, vendor assessment, and full technical implementation w/ training across the organization.</li>
+            <li>Architected and managed robust ETL and security.</li>
+          </ul>
+      <li><b class="h4">Field trial analysis pipeline</b>
+        <span>(Architected and implemented)</span>
+        <ul class="project">
+          <li>Built data engineering pipeline to structure it for data science analysis.
+          </li>
+          <li>Combined lab, greenhouse, and field trial data from many departments coming from multiple (vendor) databases, including IOT machine data.</li>
+          <li>Reduced processing data for analysis from months to one day, enabling faster business-decisions.</li>
+        </ul>
+    </ul>
+    </div>
+    </section>
+    <section>
+          <div class="workplace">
+            <b class="h2">Lead Developer</b>
+            <div class="when">
+              <time>2015-2021</time>, <a href="https://moveon.org/">MoveOn</a>
             </div>
           </div>
     <div class="tech">
@@ -181,8 +216,8 @@
     <div class="work">
     <h3>Favorite Projects</h3>
     <ul class="projects">
-      <li><b class="h4"><a href="https://github.com/MoveOnOrg/Spoke">Spoke</a></b>
-          <span>(built and fostered a now-thriving open source project and community)</span>
+      <li><b class="h4"><a href="https://github.com/StateVoicesNational/Spoke">Spoke</a></b>
+          <span>(Built and fostered a now-thriving open source project and community)</span>
           <ul class="project">
             <li>Manages campaigns and volunteers for "textbanking" (advocacy through SMS like phonebanking)</li>
             <li>Focused on an easy startup experience to bring in participation.
@@ -209,9 +244,9 @@
     </section>
     <section>
           <div class="workplace">
-            <b class="h2">New York Public Radio</b>
+            <b class="h2">Director of Digital Technology</b>
             <div class="when">
-              <time>2011-2015</time>, Director of Digital Technology
+              <time>2011-2015</time>, <a href="https://wnyc.org/">New York Public Radio</a>
             </div>
           </div>
     <div class="tech">
@@ -250,9 +285,9 @@
     </section>
     <section>
           <div class="workplace">
-            <b class="h2">Columbia University Center for New Media Teaching and Learning</b>
+            <b class="h2">Senior Programmer</b>
             <div class="when">
-              <time>2005-2011</time>, Senior Programmer
+              <time>2005-2011</time>, <a href="https://ctl.columbia.edu/">Columbia University Center for New Media Teaching and Learning</a>
             </div>
           </div>
     <div class="tech">
@@ -289,7 +324,7 @@
         <li>
          <a href="http://maap.columbia.edu/place/then.html">
 	   Immersive historic maps of New York City
-	 </a> (<a href="https://github.com/ccnmtl/maap/issues/1">bugreport</a>) 
+	 </a>
 	 for contextualizing African-American historical locations
        </li>
         <li>Archivist Round Table Award 2009
@@ -313,9 +348,9 @@
     </section>
     <section>
           <div class="workplace">
-            <b class="h2">Columbia University: Academic Information Systems</b>
+            <b class="h2">User Services Consultant</b>
             <div class="when">
-              <time>2000-2005</time>, User Services Consultant (2 grade promotions)
+              <time>2000-2005</time>, Columbia University: Academic Information Systems
             </div>
           </div>
     <div class="tech">
@@ -324,16 +359,10 @@
     <div class="work">
     <h3>Favorite Projects</h3>
     <ul class="projects">
-      <li><b class="h4">Remedy Request Tracking System (Project Manager)</b>
-      <ul class="project">
-	<li> Architected and implemented for three IT organizations and multiple IT Departments </li>
-	<li> Met with managers and users to develop requirements, document specifications for unique and general business needs</li>
-	<li> Trained all IT groups on new system and provided online documentation</li>
-      </ul>
-      </li>
       <li>
-	<b class="h4">User Knowledge Base for Technical Support</b>
+	<b class="h4">User Knowledge Base and Request Tracking System for Technical Support</b>
 	<ul class="project">
+	  <li> Architected and implemented for three IT organizations and multiple IT Departments </li>
 	  <li> Planned and designed website; Developed initial knowledge base, including FAQs and standard requests </li>
 	  <li> Designed and Implemented reports to improve the site and monitor usage by all users</li>
 	</ul>
@@ -351,7 +380,8 @@
         <b class="h2">Some Side/Short-term Projects</b>
       </div>
     <ul class="plist">
-      <li><time>2018-present</time> <a href="https://github.com/next-harm-reduction/encrypted-post">Encrypted enrollment form</a> for Harm Reduction access/supplies (<a href="https://nextdistro.org/">NEXT</a>)
+      <li><time>2023-2024</time> Laser cutting teacher at <a href="https://fatcatfablab.org/">a local maker space</a></li>
+      <li><time>2018-2021</time> <a href="https://github.com/next-harm-reduction/encrypted-post">Encrypted enrollment form</a> for Harm Reduction access/supplies (<a href="https://nextdistro.org/">NEXT</a>)
       </li>
       <li><time>2004</time> <a href="https://ouwi.org/">Ouwi Art Project</a> - Created a non-linear writing system and constructed language
       </li>
@@ -370,7 +400,7 @@
       <li>
 	<time>1996-99</time> Columbia School of Engineering and Applied Science (Electrical Engineering) 
       </li>
-      <li><time>Back in the day</time> Java 1.0, C, Pascal, 80386 asm, Commodore128 BASIC
+      <li><time>Back in the day</time> Commodore128 BASIC, 80386 asm, C, Pascal, Java 1.0
       </li>
     </ul>
     </section>
