@@ -115,7 +115,7 @@
           display:none;
       }
       div.profile:before {
-        content: "Profile:";
+        /*content: "Profile:"; */
         font-weight: bold;
       }
 
@@ -123,9 +123,13 @@
         /*text-indent: -4.5em;
         padding-left: 4.5em;*/
         /* This parses different in wiki2pdf than on the web */
-        text-indent: -3.8em;
-        padding-left: 4.1em;
+        /*text-indent: -3.8em;
+        padding-left: 4.1em;*/
       }
+      .profile td {
+        vertical-align: top;
+      }
+
       div.tech:before {
         content: "Tech: ";
         font-weight: bold;
@@ -164,12 +168,17 @@
     </div>
     <a class="pdf-link" href="./resume.pdf">(pdf)</a>
     <div class="profile">
-      <b class="h4">Profile:</b> 
+      <table>
+        <tr>
+          <td><b>Profile:</b> </td>
+          <td>
 
       Passion and experience in scaling technology and tech team productivity,
-      supporting equity and happiness at work 
-
-      with good process and human connections. Driven by the user experience.
+      supporting each other with flexible process and human connections.
+      Driven by the user experience.
+          </td>
+        </tr>
+      </table>
     </div>
     <section>
           <div class="workplace">
@@ -384,7 +393,7 @@
         <b class="h2">Some Side/Short-term Projects</b>
       </div>
     <ul class="plist">
-      <li><time>2023-2024</time> Laser cutting teacher at <a href="https://fatcatfablab.org/">a local maker space</a></li>
+      <li><time>2023-present</time> Laser cutting teacher at <a href="https://fatcatfablab.org/">a local maker space</a></li>
       <li><time>2018-2021</time> <a href="https://github.com/next-harm-reduction/encrypted-post">Encrypted enrollment form</a> for Harm Reduction access/supplies (<a href="https://nextdistro.org/">NEXT</a>)
       </li>
       <li><time>2004</time> <a href="https://ouwi.org/">Ouwi Art Project</a> - Created a non-linear writing system and constructed language
